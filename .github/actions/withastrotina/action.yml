@@ -92,7 +92,7 @@ runs:
       env:
         # TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
         # TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-        TINA_PUBLIC_CLIENT_ID: b03c0a9a-b802-4cce-9b66-c702a5f066aa
+        TINA_CLIENT_ID: b03c0a9a-b802-4cce-9b66-c702a5f066aa
         TINA_TOKEN: 6bd00339edc80eb41eda0a3d7d93d175bab13d0d
       run: npx tinacms build
 
