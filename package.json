@@ -3,13 +3,16 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "npx tinacms dev -c \"astro dev\"",
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "tinacms": "tinacms"
   },
   "dependencies": {
-    "astro": "^3.0.12"
+    "@tinacms/cli": "^1.5.29",
+    "astro": "^3.0.12",
+    "tinacms": "^1.5.20"
   }
 }
