@@ -88,6 +88,7 @@ runs:
         $PACKAGE_MANAGER install
 
     - name: Build TinaCMS
+      shell: bash
       env:
         # TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
         # TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
