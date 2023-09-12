@@ -25,6 +25,10 @@ inputs:
     type: boolean
     required: false
     default: true
+  TINA_CLIENT_ID:
+    required: true
+  TINA_TOKEN:
+    required: true
 
 runs:
   using: composite
@@ -98,8 +102,8 @@ runs:
     - name: Build TinaCMS
       shell: bash
       env:
-        TINA_CLIENT_ID: ${{ secrets.TINA_CLIENT_ID }}
-        TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+        TINA_CLIENT_ID: ${{ inputs.TINA_CLIENT_ID }}
+        TINA_TOKEN: ${{ inputs.TINA_TOKEN }}
       run: npx tinacms build
 
     - name: Build
