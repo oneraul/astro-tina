@@ -81,6 +81,10 @@ runs:
         node-version: ${{ inputs.node-version }}
         cache: ${{ env.PACKAGE_MANAGER }}
 
+    - name: Print node version
+      shell: bash
+      run: node --version
+
     - name: Install
       shell: "bash"
       run: |
@@ -92,7 +96,6 @@ runs:
       env:
         # TINA_PUBLIC_CLIENT_ID: ${{ secrets.TINA_PUBLIC_CLIENT_ID }}
         # TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-        TINA_PUBLIC_CLIENT_ID: ff6389e9-e1ba-424b-82c3-1a27c40493d3
         TINA_CLIENT_ID: ff6389e9-e1ba-424b-82c3-1a27c40493d3
         TINA_TOKEN: 15be0c4a8b83d036883cafe8f570027ebc36701c
       run: npx tinacms build
