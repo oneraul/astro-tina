@@ -6,7 +6,7 @@ export default defineConfig({
   token: "15be0c4a8b83d036883cafe8f570027ebc36701c",
 
   build: {
-    // basePath: "astro-tina",
+    basePath: "astro-tina",
     outputFolder: "admin",
     publicFolder: "public",
   },

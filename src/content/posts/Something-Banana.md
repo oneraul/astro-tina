@@ -4,6 +4,6 @@ title: Something Banana
 
 Banana?
 
-![](/src/assets/banana.jpg)
+![](../../assets/banana.jpg)
 
 Bananananananananananannana
