@@ -81,10 +81,6 @@ runs:
         node-version: ${{ inputs.node-version }}
         cache: ${{ env.PACKAGE_MANAGER }}
 
-    - name: Print node version
-      shell: bash
-      run: node --version
-
     - name: Install
       shell: "bash"
       run: |
