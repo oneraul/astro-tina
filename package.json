@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "npx tinacms dev -c \"astro dev\"",
     "start": "astro dev",
+    "prebuild": "node scripts/replaceAssetPaths.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
