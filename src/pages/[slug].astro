@@ -20,7 +20,7 @@ const { Content } = await post.render();
 
 ---
 <Layout title="Welcome to Astro.">
-    <a href="/">back</a>
+    <a href={import.meta.env.BASE_URL}>back</a>
     <h1>{post.data.title}</h1>    
     <article>
         <Content/>
