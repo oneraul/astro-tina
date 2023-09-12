@@ -10,7 +10,7 @@ const posts = await getCollection("posts");
 	<main>
 		<h1>Something</h1>
         <ul>
-            {posts.map(post => <li><a href={post.slug}>{post.data.title}</a></li>)}
+            {posts.map(post => <li><a href={`${import.meta.env.BASE_URL}/${post.slug}`}>{post.data.title}</a></li>)}
           </ul>
 	</main>
 </Layout>
