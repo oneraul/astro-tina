@@ -8,7 +8,6 @@ const posts = defineCollection({
 });
 
 const siteConfig = defineCollection({
-  type: "data",
   schema: z.object({
     thing: z.string(),
     date: z.coerce.date(),
