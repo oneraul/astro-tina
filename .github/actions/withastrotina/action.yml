@@ -103,7 +103,7 @@ runs:
       shell: "bash"
       run: |
         touch .env
-        echo ENGINE_API_KEY=${{ inputs.TINA_CLIENT_ID }} >> .env
+        echo TINA_CLIENT_ID=${{ inputs.TINA_CLIENT_ID }} >> .env
         echo TINA_TOKEN=${{ inputs.TINA_TOKEN }} >> .env
 
     - name: Build TinaCMS
