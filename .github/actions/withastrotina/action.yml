@@ -99,6 +99,12 @@ runs:
         cd ${{ inputs.path }}
         $PACKAGE_MANAGER install
 
+    - name: create env file
+      run: |
+        touch .env
+        echo ENGINE_API_KEY=${{ inputs.TINA_CLIENT_ID }} >> .env
+        echo TINA_TOKEN=${{ inputs.TINA_TOKEN }} >> .env
+
     - name: Build TinaCMS
       shell: bash
       env:
