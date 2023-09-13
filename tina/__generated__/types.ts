@@ -81,8 +81,10 @@ export type Query = {
   collections: Array<Collection>;
   node: Node;
   document: DocumentNode;
-  post: Post;
-  postConnection: PostConnection;
+  posts: Posts;
+  postsConnection: PostsConnection;
+  siteConfig: SiteConfig;
+  siteConfigConnection: SiteConfigConnection;
 };
 
 
@@ -107,22 +109,38 @@ export type QueryDocumentArgs = {
 };
 
 
-export type QueryPostArgs = {
+export type QueryPostsArgs = {
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 
-export type QueryPostConnectionArgs = {
+export type QueryPostsConnectionArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Float']['input']>;
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<PostFilter>;
+  filter?: InputMaybe<PostsFilter>;
+};
+
+
+export type QuerySiteConfigArgs = {
+  relativePath?: InputMaybe<Scalars['String']['input']>;
+};
+
+
+export type QuerySiteConfigConnectionArgs = {
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SiteConfigFilter>;
 };
 
 export type DocumentFilter = {
-  post?: InputMaybe<PostFilter>;
+  posts?: InputMaybe<PostsFilter>;
+  siteConfig?: InputMaybe<SiteConfigFilter>;
 };
 
 export type DocumentConnectionEdges = {
@@ -162,10 +180,10 @@ export type CollectionDocumentsArgs = {
   folder?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type DocumentNode = Post | Folder;
+export type DocumentNode = Posts | SiteConfig | Folder;
 
-export type Post = Node & Document & {
-  __typename?: 'Post';
+export type Posts = Node & Document & {
+  __typename?: 'Posts';
   title: Scalars['String']['output'];
   body?: Maybe<Scalars['JSON']['output']>;
   id: Scalars['ID']['output'];
@@ -186,22 +204,95 @@ export type RichTextFilter = {
   exists?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type PostFilter = {
+export type PostsFilter = {
   title?: InputMaybe<StringFilter>;
   body?: InputMaybe<RichTextFilter>;
 };
 
-export type PostConnectionEdges = {
-  __typename?: 'PostConnectionEdges';
+export type PostsConnectionEdges = {
+  __typename?: 'PostsConnectionEdges';
   cursor: Scalars['String']['output'];
-  node?: Maybe<Post>;
+  node?: Maybe<Posts>;
 };
 
-export type PostConnection = Connection & {
-  __typename?: 'PostConnection';
+export type PostsConnection = Connection & {
+  __typename?: 'PostsConnection';
   pageInfo: PageInfo;
   totalCount: Scalars['Float']['output'];
-  edges?: Maybe<Array<Maybe<PostConnectionEdges>>>;
+  edges?: Maybe<Array<Maybe<PostsConnectionEdges>>>;
+};
+
+export type SiteConfigFave_Post = Posts;
+
+export type SiteConfig = Node & Document & {
+  __typename?: 'SiteConfig';
+  thing: Scalars['String']['output'];
+  date?: Maybe<Scalars['String']['output']>;
+  fave_post?: Maybe<SiteConfigFave_Post>;
+  yes?: Maybe<Scalars['Boolean']['output']>;
+  number?: Maybe<Scalars['Float']['output']>;
+  imgSrc?: Maybe<Scalars['String']['output']>;
+  color?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  _sys: SystemInfo;
+  _values: Scalars['JSON']['output'];
+};
+
+export type DatetimeFilter = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type SiteConfigFave_PostFilter = {
+  posts?: InputMaybe<PostsFilter>;
+};
+
+export type BooleanFilter = {
+  eq?: InputMaybe<Scalars['Boolean']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type NumberFilter = {
+  lt?: InputMaybe<Scalars['Float']['input']>;
+  lte?: InputMaybe<Scalars['Float']['input']>;
+  gte?: InputMaybe<Scalars['Float']['input']>;
+  gt?: InputMaybe<Scalars['Float']['input']>;
+  eq?: InputMaybe<Scalars['Float']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Float']['input']>>>;
+};
+
+export type ImageFilter = {
+  startsWith?: InputMaybe<Scalars['String']['input']>;
+  eq?: InputMaybe<Scalars['String']['input']>;
+  exists?: InputMaybe<Scalars['Boolean']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type SiteConfigFilter = {
+  thing?: InputMaybe<StringFilter>;
+  date?: InputMaybe<DatetimeFilter>;
+  fave_post?: InputMaybe<SiteConfigFave_PostFilter>;
+  yes?: InputMaybe<BooleanFilter>;
+  number?: InputMaybe<NumberFilter>;
+  imgSrc?: InputMaybe<ImageFilter>;
+  color?: InputMaybe<StringFilter>;
+};
+
+export type SiteConfigConnectionEdges = {
+  __typename?: 'SiteConfigConnectionEdges';
+  cursor: Scalars['String']['output'];
+  node?: Maybe<SiteConfig>;
+};
+
+export type SiteConfigConnection = Connection & {
+  __typename?: 'SiteConfigConnection';
+  pageInfo: PageInfo;
+  totalCount: Scalars['Float']['output'];
+  edges?: Maybe<Array<Maybe<SiteConfigConnectionEdges>>>;
 };
 
 export type Mutation = {
@@ -210,8 +301,10 @@ export type Mutation = {
   updateDocument: DocumentNode;
   deleteDocument: DocumentNode;
   createDocument: DocumentNode;
-  updatePost: Post;
-  createPost: Post;
+  updatePosts: Posts;
+  createPosts: Posts;
+  updateSiteConfig: SiteConfig;
+  createSiteConfig: SiteConfig;
 };
 
 
@@ -242,61 +335,112 @@ export type MutationCreateDocumentArgs = {
 };
 
 
-export type MutationUpdatePostArgs = {
+export type MutationUpdatePostsArgs = {
   relativePath: Scalars['String']['input'];
-  params: PostMutation;
+  params: PostsMutation;
 };
 
 
-export type MutationCreatePostArgs = {
+export type MutationCreatePostsArgs = {
   relativePath: Scalars['String']['input'];
-  params: PostMutation;
+  params: PostsMutation;
+};
+
+
+export type MutationUpdateSiteConfigArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SiteConfigMutation;
+};
+
+
+export type MutationCreateSiteConfigArgs = {
+  relativePath: Scalars['String']['input'];
+  params: SiteConfigMutation;
 };
 
 export type DocumentUpdateMutation = {
-  post?: InputMaybe<PostMutation>;
+  posts?: InputMaybe<PostsMutation>;
+  siteConfig?: InputMaybe<SiteConfigMutation>;
   relativePath?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type DocumentMutation = {
-  post?: InputMaybe<PostMutation>;
+  posts?: InputMaybe<PostsMutation>;
+  siteConfig?: InputMaybe<SiteConfigMutation>;
 };
 
-export type PostMutation = {
+export type PostsMutation = {
   title?: InputMaybe<Scalars['String']['input']>;
   body?: InputMaybe<Scalars['JSON']['input']>;
 };
 
-export type PostPartsFragment = { __typename?: 'Post', title: string, body?: any | null };
+export type SiteConfigMutation = {
+  thing?: InputMaybe<Scalars['String']['input']>;
+  date?: InputMaybe<Scalars['String']['input']>;
+  fave_post?: InputMaybe<Scalars['String']['input']>;
+  yes?: InputMaybe<Scalars['Boolean']['input']>;
+  number?: InputMaybe<Scalars['Float']['input']>;
+  imgSrc?: InputMaybe<Scalars['String']['input']>;
+  color?: InputMaybe<Scalars['String']['input']>;
+};
 
-export type PostQueryVariables = Exact<{
+export type PostsPartsFragment = { __typename?: 'Posts', title: string, body?: any | null };
+
+export type SiteConfigPartsFragment = { __typename?: 'SiteConfig', thing: string, date?: string | null, yes?: boolean | null, number?: number | null, imgSrc?: string | null, color?: string | null, fave_post?: { __typename?: 'Posts', title: string, body?: any | null, id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null };
+
+export type PostsQueryVariables = Exact<{
   relativePath: Scalars['String']['input'];
 }>;
 
 
-export type PostQuery = { __typename?: 'Query', post: { __typename?: 'Post', id: string, title: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
+export type PostsQuery = { __typename?: 'Query', posts: { __typename?: 'Posts', id: string, title: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } };
 
-export type PostConnectionQueryVariables = Exact<{
+export type PostsConnectionQueryVariables = Exact<{
   before?: InputMaybe<Scalars['String']['input']>;
   after?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Float']['input']>;
   last?: InputMaybe<Scalars['Float']['input']>;
   sort?: InputMaybe<Scalars['String']['input']>;
-  filter?: InputMaybe<PostFilter>;
+  filter?: InputMaybe<PostsFilter>;
 }>;
 
 
-export type PostConnectionQuery = { __typename?: 'Query', postConnection: { __typename?: 'PostConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostConnectionEdges', cursor: string, node?: { __typename?: 'Post', id: string, title: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
+export type PostsConnectionQuery = { __typename?: 'Query', postsConnection: { __typename?: 'PostsConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'PostsConnectionEdges', cursor: string, node?: { __typename?: 'Posts', id: string, title: string, body?: any | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null> | null } };
 
-export const PostPartsFragmentDoc = gql`
-    fragment PostParts on Post {
+export type SiteConfigQueryVariables = Exact<{
+  relativePath: Scalars['String']['input'];
+}>;
+
+
+export type SiteConfigQuery = { __typename?: 'Query', siteConfig: { __typename?: 'SiteConfig', id: string, thing: string, date?: string | null, yes?: boolean | null, number?: number | null, imgSrc?: string | null, color?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fave_post?: { __typename?: 'Posts', title: string, body?: any | null, id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } };
+
+export type SiteConfigConnectionQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Float']['input']>;
+  last?: InputMaybe<Scalars['Float']['input']>;
+  sort?: InputMaybe<Scalars['String']['input']>;
+  filter?: InputMaybe<SiteConfigFilter>;
+}>;
+
+
+export type SiteConfigConnectionQuery = { __typename?: 'Query', siteConfigConnection: { __typename?: 'SiteConfigConnection', totalCount: number, pageInfo: { __typename?: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string, endCursor: string }, edges?: Array<{ __typename?: 'SiteConfigConnectionEdges', cursor: string, node?: { __typename?: 'SiteConfig', id: string, thing: string, date?: string | null, yes?: boolean | null, number?: number | null, imgSrc?: string | null, color?: string | null, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string }, fave_post?: { __typename?: 'Posts', title: string, body?: any | null, id: string, _sys: { __typename?: 'SystemInfo', filename: string, basename: string, breadcrumbs: Array<string>, path: string, relativePath: string, extension: string } } | null } | null } | null> | null } };
+
+export const PostsPartsFragmentDoc = gql`
+    fragment PostsParts on Posts {
   title
   body
 }
     `;
-export const PostDocument = gql`
-    query post($relativePath: String!) {
-  post(relativePath: $relativePath) {
+export const SiteConfigPartsFragmentDoc = gql`
+    fragment SiteConfigParts on SiteConfig {
+  thing
+  date
+  fave_post {
+    ... on Posts {
+      title
+      body
+    }
     ... on Document {
       _sys {
         filename
@@ -308,13 +452,34 @@ export const PostDocument = gql`
       }
       id
     }
-    ...PostParts
+  }
+  yes
+  number
+  imgSrc
+  color
+}
+    `;
+export const PostsDocument = gql`
+    query posts($relativePath: String!) {
+  posts(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...PostsParts
   }
 }
-    ${PostPartsFragmentDoc}`;
-export const PostConnectionDocument = gql`
-    query postConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PostFilter) {
-  postConnection(
+    ${PostsPartsFragmentDoc}`;
+export const PostsConnectionDocument = gql`
+    query postsConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: PostsFilter) {
+  postsConnection(
     before: $before
     after: $after
     first: $first
@@ -343,20 +508,81 @@ export const PostConnectionDocument = gql`
           }
           id
         }
-        ...PostParts
+        ...PostsParts
       }
     }
   }
 }
-    ${PostPartsFragmentDoc}`;
+    ${PostsPartsFragmentDoc}`;
+export const SiteConfigDocument = gql`
+    query siteConfig($relativePath: String!) {
+  siteConfig(relativePath: $relativePath) {
+    ... on Document {
+      _sys {
+        filename
+        basename
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+    ...SiteConfigParts
+  }
+}
+    ${SiteConfigPartsFragmentDoc}`;
+export const SiteConfigConnectionDocument = gql`
+    query siteConfigConnection($before: String, $after: String, $first: Float, $last: Float, $sort: String, $filter: SiteConfigFilter) {
+  siteConfigConnection(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sort: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasPreviousPage
+      hasNextPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      cursor
+      node {
+        ... on Document {
+          _sys {
+            filename
+            basename
+            breadcrumbs
+            path
+            relativePath
+            extension
+          }
+          id
+        }
+        ...SiteConfigParts
+      }
+    }
+  }
+}
+    ${SiteConfigPartsFragmentDoc}`;
 export type Requester<C= {}> = <R, V>(doc: DocumentNode, vars?: V, options?: C) => Promise<R>
   export function getSdk<C>(requester: Requester<C>) {
     return {
-      post(variables: PostQueryVariables, options?: C): Promise<{data: PostQuery, variables: PostQueryVariables, query: string}> {
-        return requester<{data: PostQuery, variables: PostQueryVariables, query: string}, PostQueryVariables>(PostDocument, variables, options);
+      posts(variables: PostsQueryVariables, options?: C): Promise<{data: PostsQuery, variables: PostsQueryVariables, query: string}> {
+        return requester<{data: PostsQuery, variables: PostsQueryVariables, query: string}, PostsQueryVariables>(PostsDocument, variables, options);
       },
-    postConnection(variables?: PostConnectionQueryVariables, options?: C): Promise<{data: PostConnectionQuery, variables: PostConnectionQueryVariables, query: string}> {
-        return requester<{data: PostConnectionQuery, variables: PostConnectionQueryVariables, query: string}, PostConnectionQueryVariables>(PostConnectionDocument, variables, options);
+    postsConnection(variables?: PostsConnectionQueryVariables, options?: C): Promise<{data: PostsConnectionQuery, variables: PostsConnectionQueryVariables, query: string}> {
+        return requester<{data: PostsConnectionQuery, variables: PostsConnectionQueryVariables, query: string}, PostsConnectionQueryVariables>(PostsConnectionDocument, variables, options);
+      },
+    siteConfig(variables: SiteConfigQueryVariables, options?: C): Promise<{data: SiteConfigQuery, variables: SiteConfigQueryVariables, query: string}> {
+        return requester<{data: SiteConfigQuery, variables: SiteConfigQueryVariables, query: string}, SiteConfigQueryVariables>(SiteConfigDocument, variables, options);
+      },
+    siteConfigConnection(variables?: SiteConfigConnectionQueryVariables, options?: C): Promise<{data: SiteConfigConnectionQuery, variables: SiteConfigConnectionQueryVariables, query: string}> {
+        return requester<{data: SiteConfigConnectionQuery, variables: SiteConfigConnectionQueryVariables, query: string}, SiteConfigConnectionQueryVariables>(SiteConfigConnectionDocument, variables, options);
       }
     };
   }

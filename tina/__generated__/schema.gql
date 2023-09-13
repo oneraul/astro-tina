@@ -53,12 +53,15 @@ type Query {
   collections: [Collection!]!
   node(id: String): Node!
   document(collection: String, relativePath: String): DocumentNode!
-  post(relativePath: String): Post!
-  postConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PostFilter): PostConnection!
+  posts(relativePath: String): Posts!
+  postsConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: PostsFilter): PostsConnection!
+  siteConfig(relativePath: String): SiteConfig!
+  siteConfigConnection(before: String, after: String, first: Float, last: Float, sort: String, filter: SiteConfigFilter): SiteConfigConnection!
 }
 
 input DocumentFilter {
-  post: PostFilter
+  posts: PostsFilter
+  siteConfig: SiteConfigFilter
 }
 
 type DocumentConnectionEdges {
@@ -84,9 +87,9 @@ type Collection {
   documents(before: String, after: String, first: Float, last: Float, sort: String, filter: DocumentFilter, folder: String): DocumentConnection!
 }
 
-union DocumentNode = Post | Folder
+union DocumentNode = Posts | SiteConfig | Folder
 
-type Post implements Node & Document {
+type Posts implements Node & Document {
   title: String!
   body: JSON
   id: ID!
@@ -107,20 +110,90 @@ input RichTextFilter {
   exists: Boolean
 }
 
-input PostFilter {
+input PostsFilter {
   title: StringFilter
   body: RichTextFilter
 }
 
-type PostConnectionEdges {
+type PostsConnectionEdges {
   cursor: String!
-  node: Post
+  node: Posts
 }
 
-type PostConnection implements Connection {
+type PostsConnection implements Connection {
   pageInfo: PageInfo!
   totalCount: Float!
-  edges: [PostConnectionEdges]
+  edges: [PostsConnectionEdges]
+}
+
+union SiteConfigFave_post = Posts
+
+type SiteConfig implements Node & Document {
+  thing: String!
+  date: String
+  fave_post: SiteConfigFave_post
+  yes: Boolean
+  number: Float
+  imgSrc: String
+  color: String
+  id: ID!
+  _sys: SystemInfo!
+  _values: JSON!
+}
+
+input DatetimeFilter {
+  after: String
+  before: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input SiteConfigFave_postFilter {
+  posts: PostsFilter
+}
+
+input BooleanFilter {
+  eq: Boolean
+  exists: Boolean
+}
+
+input NumberFilter {
+  lt: Float
+  lte: Float
+  gte: Float
+  gt: Float
+  eq: Float
+  exists: Boolean
+  in: [Float]
+}
+
+input ImageFilter {
+  startsWith: String
+  eq: String
+  exists: Boolean
+  in: [String]
+}
+
+input SiteConfigFilter {
+  thing: StringFilter
+  date: DatetimeFilter
+  fave_post: SiteConfigFave_postFilter
+  yes: BooleanFilter
+  number: NumberFilter
+  imgSrc: ImageFilter
+  color: StringFilter
+}
+
+type SiteConfigConnectionEdges {
+  cursor: String!
+  node: SiteConfig
+}
+
+type SiteConfigConnection implements Connection {
+  pageInfo: PageInfo!
+  totalCount: Float!
+  edges: [SiteConfigConnectionEdges]
 }
 
 type Mutation {
@@ -128,22 +201,36 @@ type Mutation {
   updateDocument(collection: String, relativePath: String!, params: DocumentUpdateMutation!): DocumentNode!
   deleteDocument(collection: String, relativePath: String!): DocumentNode!
   createDocument(collection: String, relativePath: String!, params: DocumentMutation!): DocumentNode!
-  updatePost(relativePath: String!, params: PostMutation!): Post!
-  createPost(relativePath: String!, params: PostMutation!): Post!
+  updatePosts(relativePath: String!, params: PostsMutation!): Posts!
+  createPosts(relativePath: String!, params: PostsMutation!): Posts!
+  updateSiteConfig(relativePath: String!, params: SiteConfigMutation!): SiteConfig!
+  createSiteConfig(relativePath: String!, params: SiteConfigMutation!): SiteConfig!
 }
 
 input DocumentUpdateMutation {
-  post: PostMutation
+  posts: PostsMutation
+  siteConfig: SiteConfigMutation
   relativePath: String
 }
 
 input DocumentMutation {
-  post: PostMutation
+  posts: PostsMutation
+  siteConfig: SiteConfigMutation
 }
 
-input PostMutation {
+input PostsMutation {
   title: String
   body: JSON
+}
+
+input SiteConfigMutation {
+  thing: String
+  date: String
+  fave_post: String
+  yes: Boolean
+  number: Float
+  imgSrc: String
+  color: String
 }
 
 schema {

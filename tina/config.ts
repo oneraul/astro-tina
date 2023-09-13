@@ -2,8 +2,8 @@ import { defineConfig } from "tinacms";
 
 export default defineConfig({
   branch: "main",
-  clientId: "ff6389e9-e1ba-424b-82c3-1a27c40493d3",
-  token: "15be0c4a8b83d036883cafe8f570027ebc36701c",
+  clientId: process.env.TINA_CLIENT_ID,
+  token: process.env.TINA_TOKEN,
 
   build: {
     basePath: "astro-tina",
@@ -19,7 +19,7 @@ export default defineConfig({
   schema: {
     collections: [
       {
-        name: "post",
+        name: "posts",
         label: "Posts",
         path: "src/content/posts",
         fields: [
@@ -35,6 +35,67 @@ export default defineConfig({
             name: "body",
             label: "Body",
             isBody: true,
+          },
+        ],
+      },
+      {
+        name: "siteConfig",
+        label: "Site config",
+        path: "src/content/siteConfig",
+        ui: {
+          global: true,
+          allowedActions: {
+            create: false,
+            delete: false,
+          },
+        },
+        fields: [
+          {
+            type: "string",
+            name: "thing",
+            label: "Thing",
+            required: true,
+          },
+          {
+            type: "datetime",
+            name: "date",
+            label: "Date",
+            ui: {
+              timeFormat: "HH:mm",
+            },
+          },
+          {
+            type: "reference",
+            name: "fave_post",
+            label: "Favourite post",
+            collections: ["posts"],
+          },
+          {
+            type: "boolean",
+            name: "yes",
+            label: "Yes",
+          },
+          {
+            type: "number",
+            name: "number",
+            label: "Numero",
+            description: "El número es grande pero solo Alah es GRANDE",
+          },
+          {
+            type: "image",
+            label: "Hero image",
+            name: "imgSrc",
+          },
+          {
+            type: "string",
+            name: "color",
+            label: "Background Color",
+            ui: {
+              component: "color",
+              colorFormat: "hex",
+              colors: ["#EC4815", "#241748", "#B4F4E0", "#E6FAF8"],
+              widget: "sketch",
+            },
           },
         ],
       },

@@ -1,4 +1,30 @@
-fragment PostParts on Post {
+fragment PostsParts on Posts {
   title
   body
+}
+
+fragment SiteConfigParts on SiteConfig {
+  thing
+  date
+  fave_post {
+    ... on Posts {
+      title
+      body
+    }
+    ... on Document {
+      _sys {
+        filename
+        basename
+        breadcrumbs
+        path
+        relativePath
+        extension
+      }
+      id
+    }
+  }
+  yes
+  number
+  imgSrc
+  color
 }

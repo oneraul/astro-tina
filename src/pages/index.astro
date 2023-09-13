@@ -2,9 +2,12 @@
 import Layout from '../layouts/Layout.astro';
 import Card from '../components/Card.astro';
 
-import { getCollection} from "astro:content";
+import { getCollection, getEntry} from "astro:content";
 import base_url from '../base_url';
+import site_config from "../site_config"
+
 const posts = await getCollection("posts");
+const fave_post = await getEntry("posts", site_config.fave_post);
 ---
 
 <Layout title="Welcome to Astro.">
@@ -14,4 +17,11 @@ const posts = await getCollection("posts");
             {posts.map(post => <li><a href={`${base_url}/${post.slug}`}>{post.data.title}</a></li>)}
           </ul>
 	</main>
+    <div>
+        <p>Thing: {site_config.thing}</p>
+        <p>Fave post: <a href={`${base_url}/${fave_post.slug}`}>{fave_post.data.title}</a></p>
+        <p>Date: {site_config.date.toLocaleDateString("es-ES", { dateStyle: "full" })}</p>
+        <p>Number: {site_config.number}</p>
+        <img src={site_config.imgSrc} /> <!-- TODO update to astro image -->
+    </div>
 </Layout>

@@ -1,5 +1,6 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import site_config from "../site_config";
 
 type Props = { title: string; }
 const { title } = Astro.props;
@@ -12,9 +13,13 @@ const { title } = Astro.props;
 		<meta name="description" content="Astro description" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+        <style define:vars={{ bgColor: site_config.color}}>
+            body {
+                background-color: var(--bgColor)
+            }
+        </style>
         <ViewTransitions />
 	</head>
 	<body>
