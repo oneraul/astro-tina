@@ -100,6 +100,7 @@ runs:
         $PACKAGE_MANAGER install
 
     - name: create env file
+      shell: "bash"
       run: |
         touch .env
         echo ENGINE_API_KEY=${{ inputs.TINA_CLIENT_ID }} >> .env
